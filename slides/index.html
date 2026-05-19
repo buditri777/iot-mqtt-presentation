@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IoT & MQTT — Materi Presentasi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">17</span></div>
+<button class="fullscreen-btn" onclick="toggleFullscreen()" title="Fullscreen (F)">⛶</button>
+
+<div class="deck">
+
+  <!-- Slide 1: Cover -->
+  <section class="slide active" data-slide="1">
+    <div class="bg-blobs"><div class="blob b1"></div><div class="blob b2"></div></div>
+    <div class="grid-overlay"></div>
+    <div class="cover">
+      <div class="badge">📡 INTERNET OF THINGS · MQTT PROTOCOL</div>
+      <h1 class="title-xl">IoT & MQTT<br><span class="gradient-text">untuk Web Developer</span></h1>
+      <p class="subtitle">Bikin web yang ngobrol sama device fisik — sensor, lampu, robot — pakai protokol pesan paling populer di dunia IoT.</p>
+      <div class="cover-meta">
+        <div class="meta-item"><span class="meta-label">Durasi</span><span class="meta-value">90 menit</span></div>
+        <div class="meta-item"><span class="meta-label">Level</span><span class="meta-value">Pemula → Intermediate</span></div>
+        <div class="meta-item"><span class="meta-label">Tools</span><span class="meta-value">Node.js · Mosquitto · MQTT.js</span></div>
+      </div>
+      <div class="hint">Tekan <kbd>→</kbd> untuk lanjut · <kbd>F</kbd> fullscreen</div>
+    </div>
+  </section>
+
+  <!-- Slide 2: Why -->
+  <section class="slide" data-slide="2">
+    <div class="eyebrow">01 · WHY</div>
+    <h2>Kenapa Web Developer Harus Paham IoT?</h2>
+    <div class="cards-3">
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h3>Web Bukan Cuma Halaman</h3>
+        <p>Dashboard real-time, smart home control, monitoring industri — semua butuh web yang dengar device fisik.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📈</div>
+        <h3>Pasar Lagi Meledak</h3>
+        <p>Estimasi 30 miliar device IoT terkoneksi pada 2030. Tiap device butuh interface — biasanya web.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💼</div>
+        <h3>Skill Premium</h3>
+        <p>Fullstack + IoT = niche yang dibayar lebih tinggi. Kombinasi langka di pasar developer Indonesia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 3: Problem -->
+  <section class="slide" data-slide="3">
+    <div class="eyebrow">02 · PROBLEM</div>
+    <h2>Kenapa HTTP Aja Nggak Cukup?</h2>
+    <div class="comparison">
+      <div class="comp-side bad">
+        <div class="comp-label">❌ HTTP Polling</div>
+        <ul>
+          <li>Client harus tanya server tiap detik</li>
+          <li>Boros bandwidth & battery device</li>
+          <li>Latency tinggi, bukan real-time</li>
+          <li>Stateless — server nggak tau siapa online</li>
+          <li>Overhead header gede tiap request</li>
+        </ul>
+      </div>
+      <div class="comp-side good">
+        <div class="comp-label">✅ MQTT Pub/Sub</div>
+        <ul>
+          <li>Device push data saat ada perubahan</li>
+          <li>Header cuma 2 byte — super hemat</li>
+          <li>Real-time persistent connection</li>
+          <li>Broker kelola semua koneksi</li>
+          <li>Cocok buat device kecil & jaringan tipis</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 4: What is MQTT -->
+  <section class="slide" data-slide="4">
+    <div class="eyebrow">03 · KONSEP</div>
+    <h2>Apa Itu MQTT?</h2>
+    <div class="def-box">
+      <p class="def-tagline">Message Queuing Telemetry Transport</p>
+      <p class="def-text">Protokol pesan ringan berbasis <strong>publish/subscribe</strong> yang dirancang untuk device dengan resource terbatas dan jaringan yang nggak stabil.</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">1999</div><div class="stat-label">Diciptakan oleh IBM</div></div>
+      <div class="stat"><div class="stat-num">2 byte</div><div class="stat-label">Minimum header size</div></div>
+      <div class="stat"><div class="stat-num">TCP/IP</div><div class="stat-label">Transport layer</div></div>
+      <div class="stat"><div class="stat-num">v5.0</div><div class="stat-label">Versi terbaru (2019)</div></div>
+    </div>
+  </section>
+
+  <!-- Slide 5: Pub/Sub Architecture -->
+  <section class="slide" data-slide="5">
+    <div class="eyebrow">04 · ARSITEKTUR</div>
+    <h2>Pola Publish / Subscribe</h2>
+    <div class="arch-diagram">
+      <div class="node publisher">
+        <div class="node-icon">🌡️</div>
+        <div class="node-label">Publisher</div>
+        <div class="node-sub">Sensor Suhu</div>
+      </div>
+      <div class="arrow-flow">
+        <div class="arrow-label">publish<br><code>home/suhu</code></div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="node broker">
+        <div class="node-icon">📡</div>
+        <div class="node-label">MQTT Broker</div>
+        <div class="node-sub">Mosquitto / HiveMQ / EMQX</div>
+      </div>
+      <div class="arrow-flow">
+        <div class="arrow-label">subscribe<br><code>home/suhu</code></div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="node-group">
+        <div class="node subscriber">
+          <div class="node-icon">📱</div>
+          <div class="node-label">Mobile App</div>
+        </div>
+        <div class="node subscriber">
+          <div class="node-icon">💻</div>
+          <div class="node-label">Web Dashboard</div>
+        </div>
+        <div class="node subscriber">
+          <div class="node-icon">💾</div>
+          <div class="node-label">Database</div>
+        </div>
+      </div>
+    </div>
+    <p class="caption">Publisher dan subscriber <strong>nggak saling kenal</strong> — broker yang routing semua pesan berdasarkan topic.</p>
+  </section>
+
+  <!-- Slide 6: Topics -->
+  <section class="slide" data-slide="6">
+    <div class="eyebrow">05 · TOPIC</div>
+    <h2>Topic — Alamat Pesan MQTT</h2>
+    <p class="lede">Topic itu kayak channel YouTube — publisher upload ke channel, subscriber follow channel. Format hierarki pakai <code>/</code>.</p>
+    <div class="topic-examples">
+      <div class="topic-row"><code class="topic">rumah/ruangtamu/lampu</code><span class="topic-desc">Lampu di ruang tamu</span></div>
+      <div class="topic-row"><code class="topic">pabrik/lini-1/mesin/suhu</code><span class="topic-desc">Suhu mesin di lini produksi 1</span></div>
+      <div class="topic-row"><code class="topic">kebun/+/kelembapan</code><span class="topic-desc"><strong>+</strong> = wildcard 1 level (semua kebun)</span></div>
+      <div class="topic-row"><code class="topic">gedung/#</code><span class="topic-desc"><strong>#</strong> = wildcard multi level (semua di bawah gedung)</span></div>
+    </div>
+    <div class="tips-box">
+      <div class="tips-label">💡 Pro Tips</div>
+      <ul>
+        <li>Pakai huruf kecil, hindari spasi & karakter spesial</li>
+        <li>Mulai dari general → spesifik (kayak path file)</li>
+        <li>Jangan pakai <code>/</code> di awal — bikin "empty level"</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Slide 7: QoS -->
+  <section class="slide" data-slide="7">
+    <div class="eyebrow">06 · QoS</div>
+    <h2>Quality of Service — Jaminan Pengiriman</h2>
+    <div class="qos-grid">
+      <div class="qos-card qos-0">
+        <div class="qos-num">QoS 0</div>
+        <div class="qos-name">At Most Once</div>
+        <div class="qos-desc">Fire and forget. Pesan dikirim sekali, nggak ada konfirmasi. Mungkin hilang.</div>
+        <div class="qos-use">Use case: data sensor yang sering update (suhu tiap detik)</div>
+      </div>
+      <div class="qos-card qos-1">
+        <div class="qos-num">QoS 1</div>
+        <div class="qos-name">At Least Once</div>
+        <div class="qos-desc">Ada konfirmasi (PUBACK). Pesan dijamin sampai, tapi bisa duplikat.</div>
+        <div class="qos-use">Use case: notifikasi penting yang boleh muncul 2x</div>
+      </div>
+      <div class="qos-card qos-2">
+        <div class="qos-num">QoS 2</div>
+        <div class="qos-name">Exactly Once</div>
+        <div class="qos-desc">4-way handshake. Pesan dijamin sampai tepat 1 kali. Paling lambat.</div>
+        <div class="qos-use">Use case: transaksi pembayaran, command kritis</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 8: Other Features -->
+  <section class="slide" data-slide="8">
+    <div class="eyebrow">07 · FITUR</div>
+    <h2>Fitur MQTT Yang Wajib Tau</h2>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon">📌</div>
+        <h3>Retained Message</h3>
+        <p>Broker simpan pesan terakhir di topic. Subscriber baru langsung dapat nilai terbaru tanpa nunggu publish baru.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⚰️</div>
+        <h3>Last Will (LWT)</h3>
+        <p>Pesan otomatis dipublish kalau client disconnect mendadak. Buat deteksi device offline.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">💓</div>
+        <h3>Keep Alive</h3>
+        <p>Client kirim PINGREQ tiap N detik. Broker tau client masih hidup atau udah putus.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🧹</div>
+        <h3>Clean Session</h3>
+        <p>Atur apakah broker simpan subscription & pesan saat client offline, atau reset tiap reconnect.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 9: Stack & Tools -->
+  <section class="slide" data-slide="9">
+    <div class="eyebrow">08 · TOOLS</div>
+    <h2>Stack yang Dipakai</h2>
+    <div class="stack-grid">
+      <div class="stack-item">
+        <div class="stack-icon">🦟</div>
+        <div class="stack-name">Mosquitto</div>
+        <div class="stack-role">MQTT Broker (open-source)</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🐝</div>
+        <div class="stack-name">HiveMQ Cloud</div>
+        <div class="stack-role">Broker managed (gratis tier)</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">📦</div>
+        <div class="stack-name">MQTT.js</div>
+        <div class="stack-role">Library Node.js & browser</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🔌</div>
+        <div class="stack-name">MQTT over WebSocket</div>
+        <div class="stack-role">Buat browser langsung connect</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🛠️</div>
+        <div class="stack-name">MQTT Explorer</div>
+        <div class="stack-role">GUI debug topic & pesan</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">⚡</div>
+        <div class="stack-name">Node-RED</div>
+        <div class="stack-role">Visual flow editor IoT</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 10: Code Publisher -->
+  <section class="slide" data-slide="10">
+    <div class="eyebrow">09 · KODE</div>
+    <h2>Publisher di Node.js</h2>
+    <pre class="code-block"><code><span class="kw">const</span> mqtt = <span class="fn">require</span>(<span class="str">'mqtt'</span>);
+<span class="kw">const</span> client = mqtt.<span class="fn">connect</span>(<span class="str">'mqtt://broker.hivemq.com'</span>, {
+  clientId: <span class="str">'sensor-01'</span>,
+  username: <span class="str">'user'</span>,
+  password: <span class="str">'pass'</span>,
+  clean: <span class="kw">true</span>,
+  keepalive: <span class="num">60</span>
+});
+
+client.<span class="fn">on</span>(<span class="str">'connect'</span>, () =&gt; {
+  <span class="cm">// Publish suhu tiap 5 detik</span>
+  <span class="fn">setInterval</span>(() =&gt; {
+    <span class="kw">const</span> suhu = (<span class="num">25</span> + Math.<span class="fn">random</span>() * <span class="num">5</span>).<span class="fn">toFixed</span>(<span class="num">1</span>);
+    client.<span class="fn">publish</span>(<span class="str">'rumah/ruangtamu/suhu'</span>, suhu, { qos: <span class="num">1</span>, retain: <span class="kw">true</span> });
+    console.<span class="fn">log</span>(<span class="str">`📤 Suhu: </span><span class="num">${suhu}</span><span class="str">°C`</span>);
+  }, <span class="num">5000</span>);
+});</code></pre>
+  </section>
+
+  <!-- Slide 11: Code Subscriber -->
+  <section class="slide" data-slide="11">
+    <div class="eyebrow">10 · KODE</div>
+    <h2>Subscriber di Browser (WebSocket)</h2>
+    <pre class="code-block"><code><span class="cm">// Pakai MQTT.js via CDN, connect lewat WebSocket</span>
+<span class="kw">const</span> client = mqtt.<span class="fn">connect</span>(<span class="str">'wss://broker.hivemq.com:8884/mqtt'</span>);
+
+client.<span class="fn">on</span>(<span class="str">'connect'</span>, () =&gt; {
+  console.<span class="fn">log</span>(<span class="str">'✅ Connected'</span>);
+  client.<span class="fn">subscribe</span>(<span class="str">'rumah/+/suhu'</span>, { qos: <span class="num">1</span> });
+});
+
+client.<span class="fn">on</span>(<span class="str">'message'</span>, (topic, payload) =&gt; {
+  <span class="kw">const</span> suhu = payload.<span class="fn">toString</span>();
+  <span class="kw">const</span> ruangan = topic.<span class="fn">split</span>(<span class="str">'/'</span>)[<span class="num">1</span>];
+  document.<span class="fn">getElementById</span>(ruangan).textContent = <span class="str">`</span><span class="num">${suhu}</span><span class="str">°C`</span>;
+});
+
+client.<span class="fn">on</span>(<span class="str">'error'</span>, (err) =&gt; console.<span class="fn">error</span>(err));</code></pre>
+  </section>
+
+  <!-- Slide 12: End-to-end Flow -->
+  <section class="slide" data-slide="12">
+    <div class="eyebrow">11 · ALUR</div>
+    <h2>Alur End-to-End Sistem IoT</h2>
+    <ol class="flow-list">
+      <li><strong>Sensor / device</strong> baca data fisik (suhu, kelembapan, tombol)</li>
+      <li><strong>Microcontroller</strong> (ESP32/Arduino) format jadi pesan MQTT</li>
+      <li><strong>Publish</strong> ke broker via WiFi/Ethernet/4G</li>
+      <li><strong>Broker</strong> route pesan ke semua subscriber yang match topic</li>
+      <li><strong>Backend Node.js</strong> simpan ke database + logic bisnis</li>
+      <li><strong>Frontend web</strong> subscribe via WebSocket, render real-time</li>
+      <li><strong>User</strong> kirim command balik (nyalain lampu) → publish topic kontrol</li>
+      <li><strong>Device</strong> subscribe topic kontrol, eksekusi aksi fisik</li>
+    </ol>
+  </section>
+
+  <!-- Slide 13: Security -->
+  <section class="slide" data-slide="13">
+    <div class="eyebrow">12 · SECURITY</div>
+    <h2>Keamanan MQTT</h2>
+    <div class="sec-grid">
+      <div class="sec-card">
+        <div class="sec-icon">🔐</div>
+        <h3>TLS / SSL</h3>
+        <p>Pakai <code>mqtts://</code> (port 8883) atau <code>wss://</code> (port 8884). Enkripsi end-to-end antara client dan broker.</p>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon">🆔</div>
+        <h3>Username & Password</h3>
+        <p>Auth dasar via CONNECT packet. Wajib dikombinasi dengan TLS karena password dikirim plain.</p>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon">📜</div>
+        <h3>Client Certificate</h3>
+        <p>Auth via X.509 certificate. Lebih aman buat device produksi, tiap device punya cert unik.</p>
+      </div>
+      <div class="sec-card">
+        <div class="sec-icon">🚫</div>
+        <h3>ACL (Access Control)</h3>
+        <p>Atur siapa boleh publish/subscribe ke topic mana. Cegah device A baca data device B.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 14: Use Cases -->
+  <section class="slide" data-slide="14">
+    <div class="eyebrow">13 · USE CASE</div>
+    <h2>Use Case Nyata</h2>
+    <div class="usecase-grid">
+      <div class="uc-card">
+        <div class="uc-tag">🏠 Smart Home</div>
+        <p>Lampu, AC, kunci pintu, kamera CCTV — semua dikontrol dari satu app.</p>
+      </div>
+      <div class="uc-card">
+        <div class="uc-tag">🏭 Industri 4.0</div>
+        <p>Monitoring suhu mesin, getaran, predictive maintenance, OEE dashboard.</p>
+      </div>
+      <div class="uc-card">
+        <div class="uc-tag">🌾 Smart Farming</div>
+        <p>Sensor kelembapan tanah, otomasi irigasi, monitoring greenhouse jarak jauh.</p>
+      </div>
+      <div class="uc-card">
+        <div class="uc-tag">🚗 Vehicle Telemetry</div>
+        <p>GPS tracking armada, monitoring BBM, geofence alert real-time.</p>
+      </div>
+      <div class="uc-card">
+        <div class="uc-tag">⚡ Smart Energy</div>
+        <p>Smart meter listrik, monitoring panel surya, demand-response grid.</p>
+      </div>
+      <div class="uc-card">
+        <div class="uc-tag">💊 Healthcare</div>
+        <p>Wearable monitoring detak jantung, infus pintar, asset tracking RS.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 15: Common Mistakes -->
+  <section class="slide" data-slide="15">
+    <div class="eyebrow">14 · PITFALL</div>
+    <h2>Kesalahan yang Sering Terjadi</h2>
+    <ul class="mistakes-list">
+      <li><span class="x">❌</span> <strong>Pakai broker public buat data sensitif</strong> — broker.hivemq.com itu publik, semua orang bisa subscribe.</li>
+      <li><span class="x">❌</span> <strong>Topic terlalu generik</strong> — <code>data</code> bukan topic, <code>rumah/ruangtamu/suhu</code> baru topic.</li>
+      <li><span class="x">❌</span> <strong>Lupa setting QoS</strong> — default 0, command kritis bisa hilang tanpa kamu sadar.</li>
+      <li><span class="x">❌</span> <strong>Client ID duplikat</strong> — broker akan disconnect yang lama, device mantul-mantul.</li>
+      <li><span class="x">❌</span> <strong>Nggak handle reconnect</strong> — koneksi IoT pasti putus, harus auto-reconnect.</li>
+      <li><span class="x">❌</span> <strong>Publish JSON gede-gede</strong> — MQTT didesain buat payload kecil, kalau perlu file pakai HTTP.</li>
+    </ul>
+  </section>
+
+  <!-- Slide 16: Next Steps -->
+  <section class="slide" data-slide="16">
+    <div class="eyebrow">15 · NEXT</div>
+    <h2>Langkah Selanjutnya</h2>
+    <div class="next-grid">
+      <div class="next-card">
+        <div class="next-num">1</div>
+        <h3>Hands-On</h3>
+        <p>Install Mosquitto lokal, coba pub/sub dari 2 terminal. Lanjut ke MQTT Explorer buat visualisasi.</p>
+      </div>
+      <div class="next-card">
+        <div class="next-num">2</div>
+        <h3>Bikin Dashboard</h3>
+        <p>Web sederhana yang nampilin data sensor real-time. Stack: HTML + MQTT.js + Chart.js.</p>
+      </div>
+      <div class="next-card">
+        <div class="next-num">3</div>
+        <h3>Sambung Hardware</h3>
+        <p>ESP32 + DHT22 (sensor suhu) → publish ke broker → web kamu tampilin grafik.</p>
+      </div>
+      <div class="next-card">
+        <div class="next-num">4</div>
+        <h3>Production Ready</h3>
+        <p>Pindah ke broker managed (HiveMQ Cloud / EMQX), aktifkan TLS + auth, deploy backend ke VPS.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 17: Closing -->
+  <section class="slide" data-slide="17">
+    <div class="bg-blobs"><div class="blob b1"></div><div class="blob b2"></div></div>
+    <div class="grid-overlay"></div>
+    <div class="closing">
+      <div class="badge">🎉 TERIMA KASIH</div>
+      <h1 class="title-xl">IoT Bukan <span class="gradient-text">Magic</span></h1>
+      <p class="subtitle">Cuma TCP yang ngirim 2 byte header dengan rapi — sisanya tinggal kreatifitas kamu.</p>
+      <div class="closing-stats">
+        <div class="cs-item"><div class="cs-num">2 byte</div><div class="cs-label">overhead minimum</div></div>
+        <div class="cs-item"><div class="cs-num">∞</div><div class="cs-label">device terkoneksi</div></div>
+        <div class="cs-item"><div class="cs-num">1 protokol</div><div class="cs-label">untuk semua</div></div>
+      </div>
+      <p class="cta">Saatnya bikin web kamu <strong>ngobrol</strong> sama dunia fisik.</p>
+    </div>
+  </section>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
