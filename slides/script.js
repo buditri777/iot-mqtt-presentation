@@ -58,24 +58,31 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Touch swipe for mobile
+// Touch swipe for mobile (only triggers on horizontal swipe)
 let touchStartX = 0;
+let touchStartY = 0;
 let touchEndX = 0;
+let touchEndY = 0;
 
 document.addEventListener('touchstart', (e) => {
   touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
 }, { passive: true });
 
 document.addEventListener('touchend', (e) => {
   touchEndX = e.changedTouches[0].screenX;
+  touchEndY = e.changedTouches[0].screenY;
   handleSwipe();
 }, { passive: true });
 
 function handleSwipe() {
-  const threshold = 50;
-  const diff = touchStartX - touchEndX;
-  if (Math.abs(diff) < threshold) return;
-  if (diff > 0) nextSlide();
+  const threshold = 60;
+  const diffX = touchStartX - touchEndX;
+  const diffY = touchStartY - touchEndY;
+  // Only navigate if horizontal swipe is dominant (avoids hijacking vertical scroll)
+  if (Math.abs(diffX) < threshold) return;
+  if (Math.abs(diffX) < Math.abs(diffY) * 1.5) return;
+  if (diffX > 0) nextSlide();
   else prevSlide();
 }
 
@@ -90,12 +97,14 @@ window.addEventListener('load', () => {
   }
 });
 
-// Click navigation (right half = next, left half = prev)
-document.addEventListener('click', (e) => {
-  // Skip if clicking buttons or interactive elements
-  if (e.target.closest('button, a, kbd, code, pre, input')) return;
-  const x = e.clientX;
-  const w = window.innerWidth;
-  if (x > w * 0.7) nextSlide();
-  else if (x < w * 0.3) prevSlide();
-});
+// Click navigation (desktop only — disabled on touch devices to allow scroll)
+const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+if (!isTouchDevice) {
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('button, a, kbd, code, pre, input')) return;
+    const x = e.clientX;
+    const w = window.innerWidth;
+    if (x > w * 0.7) nextSlide();
+    else if (x < w * 0.3) prevSlide();
+  });
+}
