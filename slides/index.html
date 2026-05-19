@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IoT & MQTT — Materi Presentasi</title>
+<title>Laravel & MQTT — Materi Presentasi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
 <body>
 
 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-<div class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">17</span></div>
+<div class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">18</span></div>
 <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Fullscreen (F)">⛶</button>
 
 <div class="deck">
@@ -22,13 +22,13 @@
     <div class="bg-blobs"><div class="blob b1"></div><div class="blob b2"></div></div>
     <div class="grid-overlay"></div>
     <div class="cover">
-      <div class="badge">📡 INTERNET OF THINGS · MQTT PROTOCOL</div>
-      <h1 class="title-xl">IoT & MQTT<br><span class="gradient-text">untuk Web Developer</span></h1>
-      <p class="subtitle">Bikin web yang ngobrol sama device fisik — sensor, lampu, robot — pakai protokol pesan paling populer di dunia IoT.</p>
+      <div class="badge">🐘 LARAVEL · 📡 MQTT · 🌐 IoT</div>
+      <h1 class="title-xl">Laravel & MQTT<br><span class="gradient-text">Bangun Backend IoT</span></h1>
+      <p class="subtitle">Pakai Laravel buat ngolah data dari ribuan device — MQTT broker dengar sensor, Laravel proses & simpan, browser dapat update real-time via Reverb.</p>
       <div class="cover-meta">
         <div class="meta-item"><span class="meta-label">Durasi</span><span class="meta-value">90 menit</span></div>
         <div class="meta-item"><span class="meta-label">Level</span><span class="meta-value">Pemula → Intermediate</span></div>
-        <div class="meta-item"><span class="meta-label">Tools</span><span class="meta-value">Node.js · Mosquitto · MQTT.js</span></div>
+        <div class="meta-item"><span class="meta-label">Stack</span><span class="meta-value">Laravel · Mosquitto · Reverb</span></div>
       </div>
       <div class="hint">Tekan <kbd>→</kbd> untuk lanjut · <kbd>F</kbd> fullscreen</div>
     </div>
@@ -37,22 +37,22 @@
   <!-- Slide 2: Why -->
   <section class="slide" data-slide="2">
     <div class="eyebrow">01 · WHY</div>
-    <h2>Kenapa Web Developer Harus Paham IoT?</h2>
+    <h2>Kenapa Laravel + MQTT Cocok Buat IoT?</h2>
     <div class="cards-3">
       <div class="card">
-        <div class="card-icon">🌐</div>
-        <h3>Web Bukan Cuma Halaman</h3>
-        <p>Dashboard real-time, smart home control, monitoring industri — semua butuh web yang dengar device fisik.</p>
+        <div class="card-icon">🚀</div>
+        <h3>Laravel Udah Punya Semuanya</h3>
+        <p>Queue, scheduler, broadcasting, ORM, auth — fitur yang dibutuhin sistem IoT udah jadi paket lengkap.</p>
       </div>
       <div class="card">
-        <div class="card-icon">📈</div>
-        <h3>Pasar Lagi Meledak</h3>
-        <p>Estimasi 30 miliar device IoT terkoneksi pada 2030. Tiap device butuh interface — biasanya web.</p>
+        <div class="card-icon">📡</div>
+        <h3>MQTT Pasangan Alaminya</h3>
+        <p>Device push data lewat MQTT, Laravel listen pakai Artisan command, simpan ke DB, broadcast ke web.</p>
       </div>
       <div class="card">
-        <div class="card-icon">💼</div>
-        <h3>Skill Premium</h3>
-        <p>Fullstack + IoT = niche yang dibayar lebih tinggi. Kombinasi langka di pasar developer Indonesia.</p>
+        <div class="card-icon">🇮🇩</div>
+        <h3>Skill Premium di Indonesia</h3>
+        <p>Banyak developer Laravel, sedikit yang bisa IoT. Kombinasi ini kepake di smart farm, pabrik, smart city.</p>
       </div>
     </div>
   </section>
@@ -60,26 +60,26 @@
   <!-- Slide 3: Problem -->
   <section class="slide" data-slide="3">
     <div class="eyebrow">02 · PROBLEM</div>
-    <h2>Kenapa HTTP Aja Nggak Cukup?</h2>
+    <h2>Kenapa REST API Aja Nggak Cukup?</h2>
     <div class="comparison">
       <div class="comp-side bad">
-        <div class="comp-label">❌ HTTP Polling</div>
+        <div class="comp-label">❌ REST API + Polling</div>
         <ul>
-          <li>Client harus tanya server tiap detik</li>
-          <li>Boros bandwidth & battery device</li>
-          <li>Latency tinggi, bukan real-time</li>
-          <li>Stateless — server nggak tau siapa online</li>
-          <li>Overhead header gede tiap request</li>
+          <li>Device kirim POST tiap N detik (boros battery)</li>
+          <li>Browser polling tiap detik (boros bandwidth)</li>
+          <li>Header HTTP gede (~500 byte) tiap request</li>
+          <li>Stateless — server gak tau device online/mati</li>
+          <li>Susah scale ke 1000+ device sekaligus</li>
         </ul>
       </div>
       <div class="comp-side good">
-        <div class="comp-label">✅ MQTT Pub/Sub</div>
+        <div class="comp-label">✅ MQTT + Laravel</div>
         <ul>
-          <li>Device push data saat ada perubahan</li>
-          <li>Header cuma 2 byte — super hemat</li>
-          <li>Real-time persistent connection</li>
-          <li>Broker kelola semua koneksi</li>
-          <li>Cocok buat device kecil & jaringan tipis</li>
+          <li>Persistent connection — push saat ada data</li>
+          <li>Header cuma 2 byte — efisien banget</li>
+          <li>Last Will tau device disconnect mendadak</li>
+          <li>Topic-based routing — broker yang ngurus</li>
+          <li>1 broker bisa handle 100k+ koneksi</li>
         </ul>
       </div>
     </div>
@@ -109,10 +109,10 @@
       <div class="node publisher">
         <div class="node-icon">🌡️</div>
         <div class="node-label">Publisher</div>
-        <div class="node-sub">Sensor Suhu</div>
+        <div class="node-sub">ESP32 Sensor</div>
       </div>
       <div class="arrow-flow">
-        <div class="arrow-label">publish<br><code>home/suhu</code></div>
+        <div class="arrow-label">publish<br><code>kebun/suhu</code></div>
         <div class="arrow">→</div>
       </div>
       <div class="node broker">
@@ -121,21 +121,21 @@
         <div class="node-sub">Mosquitto / HiveMQ / EMQX</div>
       </div>
       <div class="arrow-flow">
-        <div class="arrow-label">subscribe<br><code>home/suhu</code></div>
+        <div class="arrow-label">subscribe<br><code>kebun/+</code></div>
         <div class="arrow">→</div>
       </div>
       <div class="node-group">
         <div class="node subscriber">
-          <div class="node-icon">📱</div>
-          <div class="node-label">Mobile App</div>
-        </div>
-        <div class="node subscriber">
-          <div class="node-icon">💻</div>
-          <div class="node-label">Web Dashboard</div>
+          <div class="node-icon">🐘</div>
+          <div class="node-label">Laravel Worker</div>
         </div>
         <div class="node subscriber">
           <div class="node-icon">💾</div>
-          <div class="node-label">Database</div>
+          <div class="node-label">MySQL / Postgres</div>
+        </div>
+        <div class="node subscriber">
+          <div class="node-icon">📱</div>
+          <div class="node-label">Web Dashboard</div>
         </div>
       </div>
     </div>
@@ -217,220 +217,256 @@
     </div>
   </section>
 
-  <!-- Slide 9: Stack & Tools -->
+  <!-- Slide 9: Laravel Stack -->
   <section class="slide" data-slide="9">
-    <div class="eyebrow">08 · TOOLS</div>
-    <h2>Stack yang Dipakai</h2>
+    <div class="eyebrow">08 · STACK</div>
+    <h2>Stack Laravel + MQTT</h2>
     <div class="stack-grid">
       <div class="stack-item">
-        <div class="stack-icon">🦟</div>
-        <div class="stack-name">Mosquitto</div>
-        <div class="stack-role">MQTT Broker (open-source)</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-icon">🐝</div>
-        <div class="stack-name">HiveMQ Cloud</div>
-        <div class="stack-role">Broker managed (gratis tier)</div>
+        <div class="stack-icon">🐘</div>
+        <div class="stack-name">Laravel 11</div>
+        <div class="stack-role">Backend framework PHP</div>
       </div>
       <div class="stack-item">
         <div class="stack-icon">📦</div>
-        <div class="stack-name">MQTT.js</div>
-        <div class="stack-role">Library Node.js & browser</div>
+        <div class="stack-name">php-mqtt/laravel-client</div>
+        <div class="stack-role">MQTT package buat Laravel</div>
       </div>
       <div class="stack-item">
-        <div class="stack-icon">🔌</div>
-        <div class="stack-name">MQTT over WebSocket</div>
-        <div class="stack-role">Buat browser langsung connect</div>
+        <div class="stack-icon">🦟</div>
+        <div class="stack-name">Mosquitto</div>
+        <div class="stack-role">MQTT broker open-source</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">📢</div>
+        <div class="stack-name">Laravel Reverb</div>
+        <div class="stack-role">WebSocket broadcasting</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">⚡</div>
+        <div class="stack-name">Laravel Echo</div>
+        <div class="stack-role">Frontend listener</div>
       </div>
       <div class="stack-item">
         <div class="stack-icon">🛠️</div>
         <div class="stack-name">MQTT Explorer</div>
-        <div class="stack-role">GUI debug topic & pesan</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-icon">⚡</div>
-        <div class="stack-name">Node-RED</div>
-        <div class="stack-role">Visual flow editor IoT</div>
+        <div class="stack-role">GUI debug topic</div>
       </div>
     </div>
   </section>
 
-  <!-- Slide 10: Code Publisher -->
+  <!-- Slide 10: Setup Laravel -->
   <section class="slide" data-slide="10">
-    <div class="eyebrow">09 · KODE</div>
-    <h2>Publisher di Node.js</h2>
-    <pre class="code-block"><code><span class="kw">const</span> mqtt = <span class="fn">require</span>(<span class="str">'mqtt'</span>);
-<span class="kw">const</span> client = mqtt.<span class="fn">connect</span>(<span class="str">'mqtt://broker.hivemq.com'</span>, {
-  clientId: <span class="str">'sensor-01'</span>,
-  username: <span class="str">'user'</span>,
-  password: <span class="str">'pass'</span>,
-  clean: <span class="kw">true</span>,
-  keepalive: <span class="num">60</span>
-});
+    <div class="eyebrow">09 · SETUP</div>
+    <h2>Install &amp; Konfigurasi</h2>
+    <pre class="code-block"><code><span class="cm"># 1. Bikin project Laravel baru</span>
+composer create-project laravel/laravel iot-mqtt-app
+<span class="kw">cd</span> iot-mqtt-app
 
-client.<span class="fn">on</span>(<span class="str">'connect'</span>, () =&gt; {
-  <span class="cm">// Publish suhu tiap 5 detik</span>
-  <span class="fn">setInterval</span>(() =&gt; {
-    <span class="kw">const</span> suhu = (<span class="num">25</span> + Math.<span class="fn">random</span>() * <span class="num">5</span>).<span class="fn">toFixed</span>(<span class="num">1</span>);
-    client.<span class="fn">publish</span>(<span class="str">'rumah/ruangtamu/suhu'</span>, suhu, { qos: <span class="num">1</span>, retain: <span class="kw">true</span> });
-    console.<span class="fn">log</span>(<span class="str">`📤 Suhu: </span><span class="num">${suhu}</span><span class="str">°C`</span>);
-  }, <span class="num">5000</span>);
-});</code></pre>
+<span class="cm"># 2. Install MQTT client package</span>
+composer require php-mqtt/laravel-client
+php artisan vendor:publish --provider=<span class="str">"PhpMqtt\Client\MqttClientServiceProvider"</span> --tag=<span class="str">"config"</span>
+
+<span class="cm"># 3. Install Reverb buat broadcast real-time ke browser</span>
+php artisan install:broadcasting
+
+<span class="cm"># 4. Install Mosquitto broker (Ubuntu)</span>
+sudo apt install mosquitto mosquitto-clients
+sudo systemctl enable --now mosquitto
+
+<span class="cm"># 5. Set MQTT config di .env</span>
+<span class="str">MQTT_HOST=localhost</span>
+<span class="str">MQTT_PORT=1883</span>
+<span class="str">MQTT_AUTH_USERNAME=null</span>
+<span class="str">MQTT_AUTH_PASSWORD=null</span></code></pre>
   </section>
 
-  <!-- Slide 11: Code Subscriber -->
+  <!-- Slide 11: Publisher -->
   <section class="slide" data-slide="11">
     <div class="eyebrow">10 · KODE</div>
-    <h2>Subscriber di Browser (WebSocket)</h2>
-    <pre class="code-block"><code><span class="cm">// Pakai MQTT.js via CDN, connect lewat WebSocket</span>
-<span class="kw">const</span> client = mqtt.<span class="fn">connect</span>(<span class="str">'wss://broker.hivemq.com:8884/mqtt'</span>);
+    <h2>Publisher: Artisan Command</h2>
+    <pre class="code-block"><code><span class="cm">// app/Console/Commands/PublishSensor.php</span>
+<span class="kw">namespace</span> App\Console\Commands;
 
-client.<span class="fn">on</span>(<span class="str">'connect'</span>, () =&gt; {
-  console.<span class="fn">log</span>(<span class="str">'✅ Connected'</span>);
-  client.<span class="fn">subscribe</span>(<span class="str">'rumah/+/suhu'</span>, { qos: <span class="num">1</span> });
-});
+<span class="kw">use</span> Illuminate\Console\Command;
+<span class="kw">use</span> PhpMqtt\Client\Facades\MQTT;
 
-client.<span class="fn">on</span>(<span class="str">'message'</span>, (topic, payload) =&gt; {
-  <span class="kw">const</span> suhu = payload.<span class="fn">toString</span>();
-  <span class="kw">const</span> ruangan = topic.<span class="fn">split</span>(<span class="str">'/'</span>)[<span class="num">1</span>];
-  document.<span class="fn">getElementById</span>(ruangan).textContent = <span class="str">`</span><span class="num">${suhu}</span><span class="str">°C`</span>;
-});
+<span class="kw">class</span> <span class="fn">PublishSensor</span> <span class="kw">extends</span> Command
+{
+    <span class="kw">protected</span> $signature = <span class="str">'mqtt:publish-sensor'</span>;
 
-client.<span class="fn">on</span>(<span class="str">'error'</span>, (err) =&gt; console.<span class="fn">error</span>(err));</code></pre>
+    <span class="kw">public function</span> <span class="fn">handle</span>()
+    {
+        $mqtt = MQTT::<span class="fn">connection</span>();
+        $payload = <span class="fn">json_encode</span>([
+            <span class="str">'suhu'</span> =&gt; <span class="fn">rand</span>(<span class="num">25</span>, <span class="num">35</span>),
+            <span class="str">'kelembapan'</span> =&gt; <span class="fn">rand</span>(<span class="num">60</span>, <span class="num">90</span>),
+            <span class="str">'waktu'</span> =&gt; now()-&gt;<span class="fn">toIso8601String</span>(),
+        ]);
+        $mqtt-&gt;<span class="fn">publish</span>(<span class="str">'kebun/zona-1/sensor'</span>, $payload, qos: <span class="num">1</span>, retain: <span class="kw">true</span>);
+        $this-&gt;<span class="fn">info</span>(<span class="str">"📤 Publish: $payload"</span>);
+    }
+}</code></pre>
   </section>
 
-  <!-- Slide 12: End-to-end Flow -->
+  <!-- Slide 12: Subscriber -->
   <section class="slide" data-slide="12">
-    <div class="eyebrow">11 · ALUR</div>
-    <h2>Alur End-to-End Sistem IoT</h2>
+    <div class="eyebrow">11 · KODE</div>
+    <h2>Subscriber: Long-Running Listener</h2>
+    <pre class="code-block"><code><span class="cm">// app/Console/Commands/ListenSensor.php</span>
+<span class="kw">use</span> PhpMqtt\Client\Facades\MQTT;
+<span class="kw">use</span> App\Models\SensorReading;
+<span class="kw">use</span> App\Events\SensorUpdated;
+
+<span class="kw">class</span> <span class="fn">ListenSensor</span> <span class="kw">extends</span> Command
+{
+    <span class="kw">protected</span> $signature = <span class="str">'mqtt:listen'</span>;
+
+    <span class="kw">public function</span> <span class="fn">handle</span>()
+    {
+        $mqtt = MQTT::<span class="fn">connection</span>();
+        $mqtt-&gt;<span class="fn">subscribe</span>(<span class="str">'kebun/+/sensor'</span>, <span class="kw">function</span> ($topic, $message) {
+            $data = <span class="fn">json_decode</span>($message, <span class="kw">true</span>);
+            $reading = SensorReading::<span class="fn">create</span>([
+                <span class="str">'topic'</span> =&gt; $topic,
+                <span class="str">'suhu'</span> =&gt; $data[<span class="str">'suhu'</span>],
+                <span class="str">'kelembapan'</span> =&gt; $data[<span class="str">'kelembapan'</span>],
+            ]);
+            <span class="fn">broadcast</span>(<span class="kw">new</span> <span class="fn">SensorUpdated</span>($reading));
+        }, qos: <span class="num">1</span>);
+        $mqtt-&gt;<span class="fn">loop</span>(<span class="kw">true</span>);
+    }
+}</code></pre>
+  </section>
+
+  <!-- Slide 13: Real-time to Browser -->
+  <section class="slide" data-slide="13">
+    <div class="eyebrow">12 · KODE</div>
+    <h2>Broadcast ke Browser via Reverb</h2>
+    <pre class="code-block"><code><span class="cm">// app/Events/SensorUpdated.php — broadcast event</span>
+<span class="kw">class</span> <span class="fn">SensorUpdated</span> <span class="kw">implements</span> ShouldBroadcast
+{
+    <span class="kw">public function</span> <span class="fn">__construct</span>(<span class="kw">public</span> SensorReading $reading) {}
+
+    <span class="kw">public function</span> <span class="fn">broadcastOn</span>(): array
+    {
+        <span class="kw">return</span> [<span class="kw">new</span> <span class="fn">Channel</span>(<span class="str">'sensor'</span>)];
+    }
+}
+
+<span class="cm">// resources/js/dashboard.js — listen di browser</span>
+<span class="kw">import</span> Echo <span class="kw">from</span> <span class="str">'laravel-echo'</span>;
+Echo.<span class="fn">channel</span>(<span class="str">'sensor'</span>)
+    .<span class="fn">listen</span>(<span class="str">'SensorUpdated'</span>, (e) =&gt; {
+        document.<span class="fn">getElementById</span>(<span class="str">'suhu'</span>).textContent = <span class="str">`</span><span class="num">${e.reading.suhu}</span><span class="str">°C`</span>;
+        document.<span class="fn">getElementById</span>(<span class="str">'kelembapan'</span>).textContent = <span class="str">`</span><span class="num">${e.reading.kelembapan}</span><span class="str">%`</span>;
+    });</code></pre>
+  </section>
+
+  <!-- Slide 14: End-to-end Flow -->
+  <section class="slide" data-slide="14">
+    <div class="eyebrow">13 · ALUR</div>
+    <h2>Alur End-to-End Laravel + MQTT</h2>
     <ol class="flow-list">
-      <li><strong>Sensor / device</strong> baca data fisik (suhu, kelembapan, tombol)</li>
-      <li><strong>Microcontroller</strong> (ESP32/Arduino) format jadi pesan MQTT</li>
-      <li><strong>Publish</strong> ke broker via WiFi/Ethernet/4G</li>
-      <li><strong>Broker</strong> route pesan ke semua subscriber yang match topic</li>
-      <li><strong>Backend Node.js</strong> simpan ke database + logic bisnis</li>
-      <li><strong>Frontend web</strong> subscribe via WebSocket, render real-time</li>
-      <li><strong>User</strong> kirim command balik (nyalain lampu) → publish topic kontrol</li>
-      <li><strong>Device</strong> subscribe topic kontrol, eksekusi aksi fisik</li>
+      <li><strong>ESP32 + sensor DHT22</strong> baca suhu &amp; kelembapan</li>
+      <li>Device <strong>publish</strong> ke topic <code>kebun/zona-1/sensor</code></li>
+      <li><strong>Mosquitto broker</strong> terima &amp; route pesan</li>
+      <li><strong>Laravel command</strong> <code>php artisan mqtt:listen</code> jalan via Supervisor</li>
+      <li>Callback <strong>simpan ke MySQL</strong> via Eloquent (SensorReading)</li>
+      <li>Trigger <strong>event SensorUpdated</strong> → broadcast ke Reverb</li>
+      <li><strong>Browser</strong> connect Reverb via Laravel Echo</li>
+      <li>UI <strong>update real-time</strong> tanpa refresh</li>
     </ol>
   </section>
 
-  <!-- Slide 13: Security -->
-  <section class="slide" data-slide="13">
-    <div class="eyebrow">12 · SECURITY</div>
+  <!-- Slide 15: Security -->
+  <section class="slide" data-slide="15">
+    <div class="eyebrow">14 · SECURITY</div>
     <h2>Keamanan MQTT</h2>
     <div class="sec-grid">
       <div class="sec-card">
         <div class="sec-icon">🔐</div>
         <h3>TLS / SSL</h3>
-        <p>Pakai <code>mqtts://</code> (port 8883) atau <code>wss://</code> (port 8884). Enkripsi end-to-end antara client dan broker.</p>
+        <p>Pakai <code>mqtts://</code> (port 8883). Set <code>MQTT_AUTH_TLS_ENABLED=true</code> di Laravel <code>.env</code>.</p>
       </div>
       <div class="sec-card">
         <div class="sec-icon">🆔</div>
-        <h3>Username & Password</h3>
-        <p>Auth dasar via CONNECT packet. Wajib dikombinasi dengan TLS karena password dikirim plain.</p>
+        <h3>Username &amp; Password</h3>
+        <p>Auth dasar via CONNECT packet. Set di Mosquitto <code>password_file</code> + Laravel <code>.env</code>.</p>
       </div>
       <div class="sec-card">
         <div class="sec-icon">📜</div>
         <h3>Client Certificate</h3>
-        <p>Auth via X.509 certificate. Lebih aman buat device produksi, tiap device punya cert unik.</p>
+        <p>Auth via X.509 certificate. Tiap device punya cert unik — paling aman buat produksi.</p>
       </div>
       <div class="sec-card">
         <div class="sec-icon">🚫</div>
         <h3>ACL (Access Control)</h3>
-        <p>Atur siapa boleh publish/subscribe ke topic mana. Cegah device A baca data device B.</p>
+        <p>File <code>mosquitto.acl</code> atur siapa boleh pub/sub topic mana. Cegah cross-tenant.</p>
       </div>
     </div>
   </section>
 
-  <!-- Slide 14: Use Cases -->
-  <section class="slide" data-slide="14">
-    <div class="eyebrow">13 · USE CASE</div>
-    <h2>Use Case Nyata</h2>
+  <!-- Slide 16: Use Cases -->
+  <section class="slide" data-slide="16">
+    <div class="eyebrow">15 · USE CASE</div>
+    <h2>Use Case Nyata Laravel + MQTT</h2>
     <div class="usecase-grid">
       <div class="uc-card">
-        <div class="uc-tag">🏠 Smart Home</div>
-        <p>Lampu, AC, kunci pintu, kamera CCTV — semua dikontrol dari satu app.</p>
+        <div class="uc-tag">🌾 Smart Farming</div>
+        <p>Sensor kelembapan tanah → Laravel auto-trigger irigasi via topic kontrol.</p>
       </div>
       <div class="uc-card">
         <div class="uc-tag">🏭 Industri 4.0</div>
-        <p>Monitoring suhu mesin, getaran, predictive maintenance, OEE dashboard.</p>
+        <p>Monitoring mesin pabrik, alert anomali via Laravel Notification (WhatsApp/email).</p>
       </div>
       <div class="uc-card">
-        <div class="uc-tag">🌾 Smart Farming</div>
-        <p>Sensor kelembapan tanah, otomasi irigasi, monitoring greenhouse jarak jauh.</p>
+        <div class="uc-tag">🐟 Tambak Cerdas</div>
+        <p>Sensor pH, oksigen, suhu air → dashboard Filament + alert otomatis.</p>
       </div>
       <div class="uc-card">
-        <div class="uc-tag">🚗 Vehicle Telemetry</div>
-        <p>GPS tracking armada, monitoring BBM, geofence alert real-time.</p>
+        <div class="uc-tag">🚗 Fleet Tracking</div>
+        <p>GPS armada → Laravel + Leaflet map, geofence alert, riwayat rute.</p>
       </div>
       <div class="uc-card">
         <div class="uc-tag">⚡ Smart Energy</div>
-        <p>Smart meter listrik, monitoring panel surya, demand-response grid.</p>
+        <p>Smart meter → Laravel hitung tagihan + dashboard konsumsi listrik.</p>
       </div>
       <div class="uc-card">
-        <div class="uc-tag">💊 Healthcare</div>
-        <p>Wearable monitoring detak jantung, infus pintar, asset tracking RS.</p>
+        <div class="uc-tag">🏠 Smart Home SaaS</div>
+        <p>Multi-tenant, tiap user punya device sendiri, ACL Mosquitto isolasi data.</p>
       </div>
     </div>
   </section>
 
-  <!-- Slide 15: Common Mistakes -->
-  <section class="slide" data-slide="15">
-    <div class="eyebrow">14 · PITFALL</div>
+  <!-- Slide 17: Common Mistakes -->
+  <section class="slide" data-slide="17">
+    <div class="eyebrow">16 · PITFALL</div>
     <h2>Kesalahan yang Sering Terjadi</h2>
     <ul class="mistakes-list">
-      <li><span class="x">❌</span> <strong>Pakai broker public buat data sensitif</strong> — broker.hivemq.com itu publik, semua orang bisa subscribe.</li>
-      <li><span class="x">❌</span> <strong>Topic terlalu generik</strong> — <code>data</code> bukan topic, <code>rumah/ruangtamu/suhu</code> baru topic.</li>
+      <li><span class="x">❌</span> <strong>Jalanin <code>mqtt:listen</code> via <code>php artisan</code> doang</strong> — proses bakal mati. Wajib pakai <strong>Supervisor</strong> biar auto-restart.</li>
+      <li><span class="x">❌</span> <strong>Memory leak di subscriber</strong> — Eloquent cache hasil query. Tambahin <code>DB::flushQueryLog()</code> tiap N pesan.</li>
+      <li><span class="x">❌</span> <strong>Client ID duplikat</strong> — broker disconnect yang lama. Pakai <code>uniqid()</code> atau hostname per client.</li>
+      <li><span class="x">❌</span> <strong>Pakai broker public buat data sensitif</strong> — <code>broker.hivemq.com</code> publik, semua orang bisa subscribe.</li>
       <li><span class="x">❌</span> <strong>Lupa setting QoS</strong> — default 0, command kritis bisa hilang tanpa kamu sadar.</li>
-      <li><span class="x">❌</span> <strong>Client ID duplikat</strong> — broker akan disconnect yang lama, device mantul-mantul.</li>
-      <li><span class="x">❌</span> <strong>Nggak handle reconnect</strong> — koneksi IoT pasti putus, harus auto-reconnect.</li>
-      <li><span class="x">❌</span> <strong>Publish JSON gede-gede</strong> — MQTT didesain buat payload kecil, kalau perlu file pakai HTTP.</li>
+      <li><span class="x">❌</span> <strong>Publish JSON gede-gede</strong> — MQTT didesain buat payload kecil, kalau perlu file pakai HTTP/S3.</li>
     </ul>
   </section>
 
-  <!-- Slide 16: Next Steps -->
-  <section class="slide" data-slide="16">
-    <div class="eyebrow">15 · NEXT</div>
-    <h2>Langkah Selanjutnya</h2>
-    <div class="next-grid">
-      <div class="next-card">
-        <div class="next-num">1</div>
-        <h3>Hands-On</h3>
-        <p>Install Mosquitto lokal, coba pub/sub dari 2 terminal. Lanjut ke MQTT Explorer buat visualisasi.</p>
-      </div>
-      <div class="next-card">
-        <div class="next-num">2</div>
-        <h3>Bikin Dashboard</h3>
-        <p>Web sederhana yang nampilin data sensor real-time. Stack: HTML + MQTT.js + Chart.js.</p>
-      </div>
-      <div class="next-card">
-        <div class="next-num">3</div>
-        <h3>Sambung Hardware</h3>
-        <p>ESP32 + DHT22 (sensor suhu) → publish ke broker → web kamu tampilin grafik.</p>
-      </div>
-      <div class="next-card">
-        <div class="next-num">4</div>
-        <h3>Production Ready</h3>
-        <p>Pindah ke broker managed (HiveMQ Cloud / EMQX), aktifkan TLS + auth, deploy backend ke VPS.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Slide 17: Closing -->
-  <section class="slide" data-slide="17">
+  <!-- Slide 18: Closing -->
+  <section class="slide" data-slide="18">
     <div class="bg-blobs"><div class="blob b1"></div><div class="blob b2"></div></div>
     <div class="grid-overlay"></div>
     <div class="closing">
       <div class="badge">🎉 TERIMA KASIH</div>
-      <h1 class="title-xl">IoT Bukan <span class="gradient-text">Magic</span></h1>
-      <p class="subtitle">Cuma TCP yang ngirim 2 byte header dengan rapi — sisanya tinggal kreatifitas kamu.</p>
+      <h1 class="title-xl">Laravel <span class="gradient-text">+</span> MQTT</h1>
+      <p class="subtitle">Bukan magic — cuma broker yang routing pesan, dan Laravel yang udah punya semua tools buat ngolah datanya.</p>
       <div class="closing-stats">
         <div class="cs-item"><div class="cs-num">2 byte</div><div class="cs-label">overhead minimum</div></div>
+        <div class="cs-item"><div class="cs-num">1 command</div><div class="cs-label">php artisan mqtt:listen</div></div>
         <div class="cs-item"><div class="cs-num">∞</div><div class="cs-label">device terkoneksi</div></div>
-        <div class="cs-item"><div class="cs-num">1 protokol</div><div class="cs-label">untuk semua</div></div>
       </div>
-      <p class="cta">Saatnya bikin web kamu <strong>ngobrol</strong> sama dunia fisik.</p>
+      <p class="cta">Saatnya bikin Laravel kamu <strong>ngobrol</strong> sama dunia fisik.</p>
     </div>
   </section>
 

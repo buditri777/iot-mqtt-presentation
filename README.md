@@ -1,28 +1,29 @@
-# IoT & MQTT — Materi Presentasi
+# Laravel & MQTT — Materi Presentasi
 
-Deck presentasi interaktif tentang IoT dan protokol MQTT untuk web developer. Cocok buat workshop, kelas, atau seminar 60-90 menit.
+Deck presentasi interaktif tentang IoT dengan stack **Laravel + MQTT + Reverb** untuk web developer. Cocok buat workshop, kelas, atau seminar 60-90 menit.
 
 ## 🎯 Cakupan Materi
 
-17 slide yang ngebahas:
+18 slide yang ngebahas:
 
-1. **Cover** — Pengenalan tema
-2. **Why** — Kenapa web dev harus paham IoT
-3. **Problem** — Kenapa HTTP polling nggak cukup
+1. **Cover** — Laravel + MQTT untuk IoT
+2. **Why** — Kenapa Laravel cocok buat backend IoT
+3. **Problem** — REST polling vs MQTT pub/sub
 4. **Konsep MQTT** — Definisi & history
-5. **Arsitektur Pub/Sub** — Diagram publisher → broker → subscriber
+5. **Arsitektur Pub/Sub** — Diagram ESP32 → broker → Laravel → web
 6. **Topic** — Hierarki, wildcard `+` dan `#`
 7. **QoS** — Quality of Service level 0, 1, 2
 8. **Fitur Penting** — Retained, Last Will, Keep Alive, Clean Session
-9. **Stack & Tools** — Mosquitto, HiveMQ, MQTT.js, MQTT Explorer, Node-RED
-10. **Code Publisher** — Node.js example
-11. **Code Subscriber** — Browser via WebSocket
-12. **End-to-End Flow** — Sensor → broker → web → device
-13. **Security** — TLS, auth, ACL, certificate
-14. **Use Cases** — Smart home, industri, farming, telemetry, energy, healthcare
-15. **Common Mistakes** — Pitfall yang sering kena
-16. **Next Steps** — Roadmap belajar
-17. **Closing**
+9. **Stack** — Laravel, php-mqtt/laravel-client, Mosquitto, Reverb, Echo
+10. **Setup** — Composer install + config `.env` + Mosquitto
+11. **Publisher** — Artisan command pakai `MQTT::connection()`
+12. **Subscriber** — Long-running listener + Eloquent + broadcast
+13. **Real-time Browser** — Event broadcasting via Reverb + Echo
+14. **End-to-End Flow** — ESP32 → Mosquitto → Laravel → MySQL → browser
+15. **Security** — TLS, auth, ACL, certificate
+16. **Use Cases** — Smart farm, industri, tambak, fleet, energy, SaaS
+17. **Common Mistakes** — Pitfall (Supervisor, memory leak, dll)
+18. **Closing**
 
 ## 🚀 Cara Pakai
 
